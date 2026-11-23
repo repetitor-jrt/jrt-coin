@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ЖРТ КОИН — РЕПЕТИТОР Окуу Борбору</title>
+
+  <!-- Official РЕПЕТИТОР Geometric White "R" Favicon on Royal Blue (#1D4ED8) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='26' fill='%231D4ED8'/%3E%3Cg transform='translate(20,10) scale(0.8)' fill='%23FFFFFF'%3E%3Cpath d='M 16 14 H 54 A 30 30 0 0 1 54 74 H 46 V 64 H 54 A 20 20 0 0 0 54 24 H 16 Z'/%3E%3Cpath d='M 28 28 H 54 A 16 16 0 0 1 54 60 H 36 L 30.5 50.5 H 54 A 6.5 6.5 0 0 0 54 37.5 H 28 Z'/%3E%3Cpath d='M 16 64 H 48 V 74 H 28.5 V 110 H 16 Z'/%3E%3Cpolygon points='30.5,50.5 44.5,50.5 78.5,110 64,110'/%3E%3C/g%3E%3C/svg%3E" />
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter with Cyrillic Support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#EFF6FF',
+              100: '#DBEAFE',
+              200: '#BFDBFE',
+              500: '#2563EB',
+              600: '#1D4ED8',
+              700: '#1E40AF',
+              900: '#172554',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #F8FAFC;
+      color: #0F172A;
+      -webkit-tap-highlight-color: transparent;
+    }
+    @keyframes floatCoin {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-6px) rotate(3deg); }
+    }
+    .animate-coin {
+      animation: floatCoin 4s ease-in-out infinite;
+    }
+    .hero-dots {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col overflow-x-hidden">
+
+  <!-- ==================== PRELOADER OVERLAY (MAX 2.5S SAFETY TIMEOUT) ==================== -->
+  <div id="initial-loader" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center gap-3 transition-opacity duration-300">
+    <div class="w-16 h-16 rounded-2xl bg-[#1D4ED8] text-white p-3 shadow-lg animate-bounce">
+      <svg class="w-full h-full" viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+        <path d="M 16 14 H 54 A 30 30 0 0 1 54 74 H 46 V 64 H 54 A 20 20 0 0 0 54 24 H 16 Z" />
+        <path d="M 28 28 H 54 A 16 16 0 0 1 54 60 H 36 L 30.5 50.5 H 54 A 6.5 6.5 0 0 0 54 37.5 H 28 Z" />
+        <path d="M 16 64 H 48 V 74 H 28.5 V 110 H 16 Z" />
+        <polygon points="30.5,50.5 44.5,50.5 78.5,110 64,110" />
+      </svg>
+    </div>
+    <p class="font-display font-extrabold text-[#1D4ED8] text-lg">ЖРТ КОИН жүктөлүүдө...</p>
+    <p class="text-xs font-medium text-slate-500">РЕПЕТИТОР Окуу Борбору</p>
+  </div>
+
+  <!-- Hard 2500ms Safety Timeout so Preloader NEVER hangs -->
+  <script>
+    window.__hidePreloader = function () {
+      var loader = document.getElementById('initial-loader');
+      if (loader && !loader.dataset.closed) {
+        loader.dataset.closed = '1';
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+        setTimeout(function () { loader.style.display = 'none'; }, 300);
+      }
+    };
+    setTimeout(window.__hidePreloader, 2500);
+  </script>
+
+  <!-- ==================== STICKY HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-6xl mx-auto px-3 sm:px-4 h-16 flex items-center justify-between gap-2">
+      <!-- Brand Logo -->
+      <button onclick="switchView('home')" class="flex items-center gap-2.5 text-left group min-w-0">
+        <div class="w-10 h-10 rounded-xl bg-[#1D4ED8] text-white flex items-center justify-center p-1.5 shadow-sm group-hover:scale-105 transition-transform shrink-0">
+          <svg class="w-full h-full" viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-label="РЕПЕТИТОР логотип">
+            <path d="M 16 14 H 54 A 30 30 0 0 1 54 74 H 46 V 64 H 54 A 20 20 0 0 0 54 24 H 16 Z" />
+            <path d="M 28 28 H 54 A 16 16 0 0 1 54 60 H 36 L 30.5 50.5 H 54 A 6.5 6.5 0 0 0 54 37.5 H 28 Z" />
+            <path d="M 16 64 H 48 V 74 H 28.5 V 110 H 16 Z" />
+            <polygon points="30.5,50.5 44.5,50.5 78.5,110 64,110" />
+          </svg>
+        </div>
+        <div class="leading-tight truncate">
+          <div class="font-display font-extrabold text-[#1D4ED8] text-sm sm:text-base flex items-center gap-1.5">
+            <span>РЕПЕТИТОР</span>
+            <span class="px-1.5 py-0.5 text-[10px] font-extrabold rounded-md bg-amber-100 text-amber-800 border border-amber-300/70 shrink-0">ЖРТ КОИН</span>
+          </div>
+          <div class="text-[11px] font-medium text-slate-500">Окуу борбору</div>
+        </div>
+      </button>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1 bg-slate-100 p-1 rounded-2xl border border-slate-200/70">
+        <button data-nav="home" onclick="switchView('home')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all">Башкы бет</button>
+        <button data-nav="tasks" onclick="switchView('tasks')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all">Тапшырмалар</button>
+        <button data-nav="prizes" onclick="switchView('prizes')" class="nav-btn px-4 py-2 rounded-xl text-sm font-semibold transition-all">Белектер</button>
+      </nav>
+
+      <!-- Live Firebase Pill + Admin Button -->
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <span id="sync-indicator" class="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full">
+          <span>🟡</span>
+          <span class="hidden sm:inline">Туташууда...</span>
+          <span class="sm:hidden">Firebase</span>
+        </span>
+        <button id="header-admin-btn" onclick="handleAdminButtonClick()" class="px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-200 text-slate-700 hover:text-[#1D4ED8] hover:border-blue-300 hover:bg-[#EFF6FF] transition-all">
+          <span id="header-admin-label">🔒 Админ панель</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="flex-1 w-full max-w-6xl mx-auto px-3 sm:px-4 pt-5 pb-28 md:pb-14">
+
+    <!-- ==================== VIEW 1: БАШКЫ БЕТ (РЕЙТИНГ & БАЛАНС) ==================== -->
+    <section id="view-home" class="view-section space-y-6">
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1D4ED8] via-[#2563EB] to-blue-900 text-white p-6 sm:p-9 shadow-lg">
+        <div class="hero-dots absolute inset-0 pointer-events-none"></div>
+        <div class="relative z-10 grid md:grid-cols-12 gap-6 items-center">
+          <div class="md:col-span-8 space-y-3.5">
+            <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-2xl bg-white/15 backdrop-blur-sm border border-white/25">
+              <div class="w-8 h-8 rounded-xl bg-[#1D4ED8] ring-2 ring-white/80 text-white p-1.5 flex items-center justify-center shrink-0">
+                <svg class="w-full h-full" viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                  <path d="M 16 14 H 54 A 30 30 0 0 1 54 74 H 46 V 64 H 54 A 20 20 0 0 0 54 24 H 16 Z" />
+                  <path d="M 28 28 H 54 A 16 16 0 0 1 54 60 H 36 L 30.5 50.5 H 54 A 6.5 6.5 0 0 0 54 37.5 H 28 Z" />
+                  <path d="M 16 64 H 48 V 74 H 28.5 V 110 H 16 Z" />
+                  <polygon points="30.5,50.5 44.5,50.5 78.5,110 64,110" />
+                </svg>
+              </div>
+              <div class="leading-tight">
+                <div class="font-display font-extrabold text-xs uppercase tracking-wide">РЕПЕТИТОР ОКУУ БОРБОРУ</div>
+                <div class="text-[11px] text-blue-100">ЖРТ челленджи • Монета топто жана белек ут!</div>
+              </div>
+            </div>
+
+            <h1 class="font-display font-extrabold text-3xl sm:text-5xl tracking-tight leading-tight">
+              Рейтинг &amp; <span class="text-yellow-300">Менин балансым</span>
+            </h1>
+
+            <p class="text-blue-100 text-sm sm:text-base max-w-2xl leading-relaxed">
+              Сабактардагы активдүүлүк жана тапшырмалар аркылуу коин топтоп, баалуу белектерге алмаштыр! Өзүңдүн балансыңды жана тарыхыңды көрүү үчүн атыңды изде.
+            </p>
+
+            <!-- Instant Student Search Bar -->
+            <div class="relative max-w-xl pt-1">
+              <input
+                id="student-search-input"
+                type="text"
+                autocomplete="off"
+                oninput="renderLeaderboard()"
+                placeholder="Аты-жөнүңдү же тобуңду жаз..."
+                class="w-full pl-4 pr-11 py-3.5 rounded-2xl bg-white text-slate-900 placeholder-slate-400 font-semibold text-sm sm:text-base focus:outline-none focus:ring-4 focus:ring-amber-400/60 shadow-lg"
+              />
+              <button id="clear-student-search" onclick="clearStudentSearch()" class="hidden absolute inset-y-0 right-3.5 top-1 text-slate-400 hover:text-slate-700 font-extrabold text-base">✕</button>
+            </div>
+          </div>
+
+          <!-- Gold Coin Illustration -->
+          <div class="md:col-span-4 hidden md:flex flex-col items-center justify-center">
+            <div class="w-40 h-40 animate-coin">
+              <svg viewBox="0 0 160 160" class="w-full h-full drop-shadow-2xl">
+                <defs>
+                  <linearGradient id="goldCoinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#FDE047"/>
+                    <stop offset="50%" stop-color="#FBBF24"/>
+                    <stop offset="100%" stop-color="#F59E0B"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="80" cy="80" r="74" fill="url(#goldCoinGrad)" stroke="#B45309" stroke-width="5"/>
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#9A3412" stroke-width="5" stroke-dasharray="12 9" stroke-linecap="round"/>
+                <polygon points="80,32 93,61 124,64 100,84 107,115 80,99 53,115 60,84 36,64 67,61" fill="#FFFFFF" stroke="#FEF3C7" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div class="flex gap-2 mt-3">
+              <button onclick="switchView('tasks')" class="px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 border border-white/30 text-xs font-bold">📋 Тапшырмалар</button>
+              <button onclick="switchView('prizes')" class="px-3.5 py-2 rounded-xl bg-[#F59E0B] hover:bg-amber-400 text-slate-950 text-xs font-extrabold">🎁 Белектер</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-[#EFF6FF] text-[#1D4ED8] flex items-center justify-center text-xl shrink-0">👥</div>
+          <div>
+            <div id="stat-students" class="font-display font-extrabold text-2xl text-slate-900">0</div>
+            <div class="text-xs font-medium text-slate-500">Окуучулар</div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl shrink-0">📋</div>
+          <div>
+            <div id="stat-tasks" class="font-display font-extrabold text-2xl text-slate-900">0</div>
+            <div class="text-xs font-medium text-slate-500">Тапшырмалар</div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl shrink-0">🎁</div>
+          <div>
+            <div id="stat-prizes" class="font-display font-extrabold text-2xl text-slate-900">0</div>
+            <div class="text-xs font-medium text-slate-500">Белектер</div>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-sm flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-yellow-50 text-amber-600 flex items-center justify-center text-xl shrink-0">🪙</div>
+          <div>
+            <div id="stat-coins" class="font-display font-extrabold text-2xl text-amber-600">0</div>
+            <div class="text-xs font-medium text-slate-500">Жалпы коин</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top 3 Podium Highlights -->
+      <div id="top3-section" class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h2 class="font-display font-extrabold text-lg sm:text-xl text-slate-900">🏆 Алдыңкы 3 лидер</h2>
+          <span class="text-xs font-semibold text-slate-500">Балансты көрүү үчүн окуучуну басыңыз</span>
+        </div>
+        <div id="home-top3-grid" class="grid sm:grid-cols-3 gap-3.5"></div>
+      </div>
+
+      <!-- Full Ranked Leaderboard Table -->
+      <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between gap-2">
+          <div>
+            <h3 class="font-display font-extrabold text-lg text-slate-900">Жалпы рейтинг</h3>
+            <p class="text-xs text-slate-500">Окуучунун үстүн бассаңыз, жеке балансы жана тарыхы ачылат</p>
+          </div>
+          <span id="leaderboard-count" class="px-3 py-1 rounded-full bg-[#EFF6FF] text-[#1D4ED8] text-xs font-extrabold">0 окуучу</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase border-b border-slate-100">
+                <th class="py-3 px-4 w-16 text-center">Орун</th>
+                <th class="py-3 px-4">Окуучу</th>
+                <th class="py-3 px-4 hidden sm:table-cell">Топ</th>
+                <th class="py-3 px-4 text-right">Баланс</th>
+                <th class="py-3 px-4 text-right w-24">Тарыхы</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: ТАПШЫРМАЛАР ==================== -->
+    <section id="view-tasks" class="view-section hidden space-y-5">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+        <div>
+          <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-[#1D4ED8] bg-[#EFF6FF] px-3 py-1 rounded-full">Монета топтоо</span>
+          <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mt-2">Тапшырмалар</h2>
+          <p class="text-sm text-slate-600 mt-1">Тапшырмаларды аткарып, далилдерин Telegram аркылуу жөнөтүп коин топто!</p>
+        </div>
+        <a id="tasks-telegram-top" href="https://t.me/+dGqNndBKQRViYTQ0" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-bold text-xs sm:text-sm shadow-sm shrink-0">
+          <span>✈️ Telegram канал / чат</span>
+        </a>
+      </div>
+      <div id="tasks-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
+    </section>
+
+    <!-- ==================== VIEW 3: БЕЛЕКТЕР ==================== -->
+    <section id="view-prizes" class="view-section hidden space-y-5">
+      <div>
+        <span class="inline-block text-xs font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 px-3 py-1 rounded-full">Белектер каталогу</span>
+        <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-slate-900 mt-2">Белектер</h2>
+        <p class="text-sm text-slate-600 mt-1">Топтогон коиндериңди баалуу белектерге алмаштыра аласың. Сүрөттү басып чоңойтуп көрсөңүз болот.</p>
+      </div>
+      <div id="prizes-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"></div>
+    </section>
+
+    <!-- ==================== VIEW 4: АДМИНИСТРАТОР ПАНЕЛИ ==================== -->
+    <section id="view-admin" class="view-section hidden space-y-6">
+      <!-- Admin Header & Firestore Document Size Indicator (1,048,576 bytes = 1024 KB) -->
+      <div class="rounded-3xl bg-slate-900 text-white p-5 sm:p-6 space-y-4 shadow-lg">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-2xl bg-[#1D4ED8] text-white p-2 flex items-center justify-center shrink-0">
+              <svg class="w-full h-full" viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <path d="M 16 14 H 54 A 30 30 0 0 1 54 74 H 46 V 64 H 54 A 20 20 0 0 0 54 24 H 16 Z" />
+                <path d="M 28 28 H 54 A 16 16 0 0 1 54 60 H 36 L 30.5 50.5 H 54 A 6.5 6.5 0 0 0 54 37.5 H 28 Z" />
+                <path d="M 16 64 H 48 V 74 H 28.5 V 110 H 16 Z" />
+                <polygon points="30.5,50.5 44.5,50.5 78.5,110 64,110" />
+              </svg>
+            </div>
+            <div>
+              <h2 class="font-display font-extrabold text-lg sm:text-xl">Администратор панели</h2>
+              <p class="text-xs text-slate-400">Окуучуларды, коиндерди, сүрөттүү тапшырмаларды жана белектерди башкаруу</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="switchView('home')" class="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-xs sm:text-sm font-bold">Сайтты көрүү</button>
+            <button onclick="logoutAdmin()" class="px-3.5 py-2 rounded-xl bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 border border-rose-400/30 text-xs sm:text-sm font-bold">Чыгуу</button>
+          </div>
+        </div>
+
+        <!-- Firestore Storage Bar -->
+        <div class="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+          <div class="text-slate-300">
+            💾 <strong id="storage-size-label" class="text-white">База көлөмү: 0 KB / 1024 KB</strong>
+          </div>
+          <div class="w-full sm:w-64 h-2.5 bg-white/10 rounded-full overflow-hidden">
+            <div id="storage-size-bar" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 2%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin 5 Sub-tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+        <button onclick="switchAdminTab('students')" data-admin-tab="students" class="admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap">👥 Окуучулар &amp; Коин</button>
+        <button onclick="switchAdminTab('tasks')" data-admin-tab="tasks" class="admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap">📋 Тапшырмалар</button>
+        <button onclick="switchAdminTab('prizes')" data-admin-tab="prizes" class="admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap">🎁 Белектер</button>
+        <button onclick="switchAdminTab('redemptions')" data-admin-tab="redemptions" class="admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap">🔄 Алмаштыруулар</button>
+        <button onclick="switchAdminTab('settings')" data-admin-tab="settings" class="admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap">⚙️ Жөндөөлөр</button>
+      </div>
+
+      <!-- ========== ADMIN SUB-TAB 1: ОКУУЧУЛАР & КОИН ========== -->
+      <div id="admin-tab-students" class="admin-subpanel space-y-5">
+        <!-- Award / Deduct Coins Form (Individual OR Whole Group) -->
+        <div class="bg-white rounded-3xl p-5 border border-slate-200/80 shadow-sm space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div>
+              <h3 class="font-display font-extrabold text-base sm:text-lg text-slate-900">🪙 Коин кошуу же кемитүү</h3>
+              <p class="text-xs text-slate-500">Жеке окуучуга же бүтүндөй бир топко бир баскыч менен коин бериңиз</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openStudentModal()" class="px-3.5 py-2 rounded-xl bg-[#1D4ED8] hover:bg-blue-800 text-white text-xs font-extrabold shadow-sm">+ Жаңы окуучу</button>
+              <button type="button" onclick="exportStudentsCSV()" class="px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-extrabold">⬇ CSV жүктөө</button>
+            </div>
+          </div>
+
+          <form onsubmit="handleCoinOperation(event)" class="grid sm:grid-cols-12 gap-3 items-end">
+            <div class="sm:col-span-3">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Кимге?</label>
+              <select id="coin-target-mode" onchange="toggleCoinTargetSelect()" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-semibold">
+                <option value="student">👤 Жеке окуучуга</option>
+                <option value="group">👥 Бүтүндөй топко</option>
+              </select>
+            </div>
+
+            <div id="coin-student-wrap" class="sm:col-span-4">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Окуучуну тандаңыз *</label>
+              <select id="coin-student-select" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-semibold"></select>
+            </div>
+
+            <div id="coin-group-wrap" class="sm:col-span-4 hidden">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Топту тандаңыз *</label>
+              <select id="coin-group-select" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-semibold"></select>
+            </div>
+
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Аракет</label>
+              <select id="coin-op-type" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm font-bold">
+                <option value="add">➕ Кошуу</option>
+                <option value="deduct">➖ Кемитүү</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-3">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Коин саны *</label>
+              <input id="coin-op-amount" type="number" min="1" required value="10" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-display font-extrabold" />
+            </div>
+
+            <div class="sm:col-span-5">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Тапшырмадан тандоо (милдеттүү эмес)</label>
+              <select id="coin-task-preset" onchange="applyTaskPreset(this.value)" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm">
+                <option value="">— Себебин өзүм жазам —</option>
+              </select>
+            </div>
+
+            <div class="sm:col-span-4">
+              <label class="block text-xs font-bold text-slate-600 mb-1">Себеби / Комментарий *</label>
+              <input id="coin-op-reason" type="text" required placeholder="Мисалы: Сабакта активдүү болду" class="w-full px-3 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm" />
+            </div>
+
+            <div class="sm:col-span-3">
+              <button type="submit" class="w-full py-2.5 px-4 rounded-xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-extrabold text-sm shadow-sm transition-all">
+                ✓ Аткаруу
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Students Management Table -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="p-4 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h3 class="font-display font-extrabold text-base text-slate-900">Окуучулардын тизмеси</h3>
+              <p class="text-xs text-slate-500">Бардык окуучулар, топтору жана баланстары</p>
+            </div>
+            <input id="admin-st-search" type="text" oninput="renderAdminStudents()" placeholder="🔍 Окуучуну же топту издөө..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase border-b border-slate-100">
+                  <th class="py-3 px-4">Окуучу</th>
+                  <th class="py-3 px-4">Топ / Байланыш</th>
+                  <th class="py-3 px-4 text-right">Баланс</th>
+                  <th class="py-3 px-4 text-right">Аракеттер</th>
+                </tr>
+              </thead>
+              <tbody id="admin-students-tbody" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== ADMIN SUB-TAB 2: ТАПШЫРМАЛАР ========== -->
+      <div id="admin-tab-tasks" class="admin-subpanel hidden space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm">
+          <div>
+            <h3 class="font-display font-extrabold text-lg text-slate-900">Тапшырмаларды башкаруу</h3>
+            <p class="text-xs text-slate-500">Жаңы тапшырма кошуңуз же «✏️ Өзгөртүү» аркылуу сүрөт кошуңуз/алмаштырыңыз</p>
+          </div>
+          <button onclick="openTaskModal()" class="px-5 py-3 rounded-2xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-bold text-sm shadow-sm shrink-0">
+            + Жаңы тапшырма
+          </button>
+        </div>
+        <div id="admin-tasks-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- ========== ADMIN SUB-TAB 3: БЕЛЕКТЕР ========== -->
+      <div id="admin-tab-prizes" class="admin-subpanel hidden space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-5 rounded-3xl border border-slate-200/80 shadow-sm">
+          <div>
+            <h3 class="font-display font-extrabold text-lg text-slate-900">Белектерди башкаруу</h3>
+            <p class="text-xs text-slate-500">Жаңы белек кошуңуз же «✏️ Өзгөртүү» аркылуу галереядан сүрөт кошуңуз</p>
+          </div>
+          <button onclick="openPrizeModal()" class="px-5 py-3 rounded-2xl bg-[#F59E0B] hover:bg-amber-600 text-white font-extrabold text-sm shadow-sm shrink-0">
+            + Жаңы белек
+          </button>
+        </div>
+        <div id="admin-prizes-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- ========== ADMIN SUB-TAB 4: АЛМАШТЫРУУЛАР ========== -->
+      <div id="admin-tab-redemptions" class="admin-subpanel hidden">
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden">
+          <div class="p-4 sm:p-5 border-b border-slate-100 flex items-center justify-between gap-2">
+            <div>
+              <h3 class="font-display font-extrabold text-lg text-slate-900">Белекке алмаштыруулар</h3>
+              <p class="text-xs text-slate-500">Окуучулар буйрутма берген белектердин статусун «Күтүүдө» / «Берилди» кылып өзгөртүңүз</p>
+            </div>
+            <span id="redemptions-count" class="px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-extrabold">0</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="bg-slate-50 text-slate-500 text-xs font-bold uppercase border-b border-slate-100">
+                  <th class="py-3 px-4">Күнү</th>
+                  <th class="py-3 px-4">Окуучу</th>
+                  <th class="py-3 px-4">Белек</th>
+                  <th class="py-3 px-4 text-right">Коин</th>
+                  <th class="py-3 px-4 text-right">Статус</th>
+                </tr>
+              </thead>
+              <tbody id="admin-redemptions-tbody" class="divide-y divide-slate-100"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== ADMIN SUB-TAB 5: ЖӨНДӨӨЛӨР ========== -->
+      <div id="admin-tab-settings" class="admin-subpanel hidden">
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm max-w-xl space-y-4">
+          <div>
+            <h3 class="font-display font-extrabold text-lg text-slate-900">⚙️ Система жөндөөлөрү</h3>
+            <p class="text-xs text-slate-500">Telegram шилтемесин жана Админ панелдин сыр сөзүн өзгөртүү</p>
+          </div>
+          <form onsubmit="handleSaveSettings(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Telegram шилтемеси (URL) *</label>
+              <input id="set-telegram-url" type="url" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Админ паролу *</label>
+              <input id="set-admin-pass" type="text" required minlength="4" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+            </div>
+            <button type="submit" class="px-6 py-3 rounded-2xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-bold text-sm shadow-sm">
+              Сактоо
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MOBILE BOTTOM NAV ==================== -->
+  <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 shadow-lg">
+    <div class="grid grid-cols-3 gap-1.5 max-w-md mx-auto">
+      <button data-mob-nav="home" onclick="switchView('home')" class="mob-nav-btn flex flex-col items-center py-2 rounded-xl text-xs font-bold">
+        <span class="text-base">🏆</span><span>Башкы бет</span>
+      </button>
+      <button data-mob-nav="tasks" onclick="switchView('tasks')" class="mob-nav-btn flex flex-col items-center py-2 rounded-xl text-xs font-bold">
+        <span class="text-base">📋</span><span>Тапшырмалар</span>
+      </button>
+      <button data-mob-nav="prizes" onclick="switchView('prizes')" class="mob-nav-btn flex flex-col items-center py-2 rounded-xl text-xs font-bold">
+        <span class="text-base">🎁</span><span>Белектер</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ==================== MODAL: STUDENT DETAIL & HISTORY ==================== -->
+  <div id="modal-student-detail" onclick="if(event.target===this) closeModal('modal-student-detail')" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl w-full max-w-lg overflow-hidden shadow-2xl my-auto">
+      <div id="sd-header" class="bg-gradient-to-r from-[#1D4ED8] to-[#2563EB] text-white p-5 sm:p-6 flex items-start justify-between gap-3">
+        <div>
+          <div id="sd-rank-group" class="text-xs font-bold text-blue-100"></div>
+          <h3 id="sd-name" class="font-display font-extrabold text-xl sm:text-2xl mt-1"></h3>
+        </div>
+        <button onclick="closeModal('modal-student-detail')" class="w-9 h-9 rounded-full bg-white/15 hover:bg-white/25 text-white font-bold shrink-0">✕</button>
+      </div>
+      <div id="sd-body" class="p-5 sm:p-6 space-y-4"></div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: STUDENT PRIZE REDEMPTION ==================== -->
+  <div id="modal-redeem" onclick="if(event.target===this) closeModal('modal-redeem')" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display font-extrabold text-lg text-slate-900">🎁 Белекке алмаштыруу</h3>
+        <button onclick="closeModal('modal-redeem')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600">✕</button>
+      </div>
+      <div id="redeem-prize-summary" class="p-4 rounded-2xl bg-[#EFF6FF] border border-blue-100"></div>
+      <form onsubmit="handleConfirmRedemption(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Аты-жөнүңдү танда *</label>
+          <select id="redeem-student-select" required onchange="updateRedeemBalanceHint()" class="w-full px-3.5 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]"></select>
+        </div>
+        <div id="redeem-balance-hint" class="text-xs font-bold p-3 rounded-xl bg-slate-50 text-slate-600"></div>
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="closeModal('modal-redeem')" class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm">Жабуу</button>
+          <button id="redeem-submit-btn" type="submit" class="flex-1 py-3 rounded-xl bg-[#F59E0B] hover:bg-amber-500 text-slate-950 font-extrabold text-sm">Алмаштыруу</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: FULL-SCREEN LIGHTBOX ==================== -->
+  <div id="modal-lightbox" onclick="if(event.target===this) closeModal('modal-lightbox')" class="hidden fixed inset-0 z-[60] bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl relative">
+      <button onclick="closeModal('modal-lightbox')" class="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-slate-900/75 text-white font-bold">✕</button>
+      <div class="bg-slate-900 flex items-center justify-center max-h-[65vh] overflow-hidden">
+        <img id="lb-img" src="" alt="" class="w-full h-auto max-h-[65vh] object-contain" />
+      </div>
+      <div class="p-5 space-y-1.5">
+        <div class="flex items-center justify-between gap-2">
+          <h3 id="lb-title" class="font-display font-extrabold text-lg text-slate-900"></h3>
+          <span id="lb-badge" class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 font-display font-extrabold text-xs shrink-0"></span>
+        </div>
+        <p id="lb-desc" class="text-sm text-slate-600"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: ADMIN PASSWORD LOGIN ==================== -->
+  <div id="modal-login" onclick="if(event.target===this) closeModal('modal-login')" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl space-y-4">
+      <div class="text-center">
+        <div class="w-12 h-12 mx-auto rounded-2xl bg-[#1D4ED8] text-white p-2 mb-2.5">
+          <svg class="w-full h-full" viewBox="0 0 100 124" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+            <path d="M 16 14 H 54 A 30 30 0 0 1 54 74 H 46 V 64 H 54 A 20 20 0 0 0 54 24 H 16 Z" />
+            <path d="M 28 28 H 54 A 16 16 0 0 1 54 60 H 36 L 30.5 50.5 H 54 A 6.5 6.5 0 0 0 54 37.5 H 28 Z" />
+            <path d="M 16 64 H 48 V 74 H 28.5 V 110 H 16 Z" />
+            <polygon points="30.5,50.5 44.5,50.5 78.5,110 64,110" />
+          </svg>
+        </div>
+        <h3 class="font-display font-extrabold text-xl text-slate-900">Админ панелге кирүү</h3>
+        <p class="text-xs text-slate-500 mt-1">Администратор сыр сөзүн жазыңыз</p>
+      </div>
+      <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+        <input id="login-password" type="password" required placeholder="Пароль" class="w-full px-4 py-3 rounded-2xl bg-slate-50 border border-slate-200 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+        <p id="login-error" class="hidden text-xs font-bold text-rose-600 bg-rose-50 p-2.5 rounded-xl text-center">Пароль туура эмес!</p>
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="closeModal('modal-login')" class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm">Жабуу</button>
+          <button type="submit" class="flex-1 py-3 rounded-xl bg-[#1D4ED8] text-white font-bold text-sm">Кирүү</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: ADD / EDIT STUDENT ==================== -->
+  <div id="modal-student-form" onclick="if(event.target===this) closeModal('modal-student-form')" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 id="st-modal-title" class="font-display font-extrabold text-lg text-slate-900">+ Жаңы окуучу</h3>
+        <button onclick="closeModal('modal-student-form')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600">✕</button>
+      </div>
+      <form onsubmit="handleStudentFormSubmit(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Аты-жөнү *</label>
+          <input id="st-form-name" type="text" required placeholder="Мисалы: Асан Үсөнов" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Топ *</label>
+            <input id="st-form-group" type="text" required placeholder="Онлайн-1" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Баланс (коин)</label>
+            <input id="st-form-coins" type="number" min="0" value="0" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Байланыш (Telegram / Тел)</label>
+          <input id="st-form-contact" type="text" placeholder="@username же 0700..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+        </div>
+        <div class="flex gap-2 pt-1">
+          <button type="button" onclick="closeModal('modal-student-form')" class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm">Жабуу</button>
+          <button type="submit" class="flex-1 py-3 rounded-xl bg-[#1D4ED8] text-white font-bold text-sm">Сактоо</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: ADD / EDIT TASK OR PRIZE (WITH IMAGE COMPRESSION) ==================== -->
+  <div id="modal-catalog" onclick="if(event.target===this) closeModal('modal-catalog')" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-4 my-auto">
+      <div class="flex items-center justify-between">
+        <h3 id="cat-modal-title" class="font-display font-extrabold text-lg text-slate-900">—</h3>
+        <button onclick="closeModal('modal-catalog')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-600">✕</button>
+      </div>
+      <form onsubmit="handleCatalogSubmit(event)" class="space-y-3.5">
+        <div>
+          <label id="cat-title-label" class="block text-xs font-bold text-slate-600 mb-1">Аталышы *</label>
+          <input id="cat-title" type="text" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-600 mb-1">Сүрөттөмөсү *</label>
+          <textarea id="cat-desc" rows="2" required class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]"></textarea>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label id="cat-coins-label" class="block text-xs font-bold text-slate-600 mb-1">Коин саны *</label>
+            <input id="cat-coins" type="number" min="1" required value="10" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm font-display font-bold focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-600 mb-1">Белгиче (Badge)</label>
+            <input id="cat-badge" type="text" value="⚡" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm text-center font-bold focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+          </div>
+        </div>
+
+        <!-- Stock field (shown only for Prizes) -->
+        <div id="cat-stock-wrap" class="hidden">
+          <label class="block text-xs font-bold text-slate-600 mb-1">Калган саны (милдеттүү эмес, бош калтырса чексиз)</label>
+          <input id="cat-stock" type="number" min="0" placeholder="Мисалы: 5" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-[#1D4ED8]" />
+        </div>
+
+        <!-- Quick Badge Selector -->
+        <div id="cat-badge-pills" class="flex items-center gap-1.5 flex-wrap"></div>
+
+        <!-- Photo Upload & Preview -->
+        <div class="space-y-2 pt-1">
+          <label class="block text-xs font-bold text-slate-600">Сүрөт кошуу (галереядан):</label>
+          <label class="flex items-center justify-center gap-2 w-full py-3 px-4 rounded-2xl border-2 border-dashed border-blue-300 bg-[#EFF6FF] hover:bg-blue-100 text-[#1D4ED8] font-extrabold text-xs sm:text-sm cursor-pointer transition-all">
+            <span>🖼 Сүрөт тандоо</span>
+            <input id="cat-image-input" type="file" accept="image/*" class="hidden" onchange="handleCatalogImageSelect(event)" />
+          </label>
+
+          <div id="cat-preview-wrap" class="hidden rounded-2xl overflow-hidden border border-slate-200 bg-slate-50">
+            <img id="cat-preview-img" src="" alt="Алдын ала көрүү" class="w-full h-40 object-cover" />
+            <div class="p-2.5 flex items-center justify-between bg-white border-t border-slate-200">
+              <span id="cat-preview-info" class="text-[11px] font-bold text-emerald-700">✓ Сүрөт даяр</span>
+              <button type="button" onclick="removeCatalogImage()" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold">
+                ✕ Сүрөттү өчүрүү
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeModal('modal-catalog')" class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm">Жабуу</button>
+          <button type="submit" class="flex-1 py-3 rounded-xl bg-[#1D4ED8] hover:bg-blue-800 text-white font-bold text-sm">Сактоо</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: CONFIRMATION ==================== -->
+  <div id="modal-confirm" onclick="if(event.target===this) closeModal('modal-confirm')" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl space-y-4">
+      <h3 id="conf-title" class="font-display font-extrabold text-lg text-slate-900">Тастыктоо</h3>
+      <p id="conf-msg" class="text-sm text-slate-600 leading-relaxed"></p>
+      <div class="flex gap-2">
+        <button onclick="closeModal('modal-confirm')" class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-700 font-bold text-sm">Жок</button>
+        <button id="conf-yes" class="flex-1 py-3 rounded-xl bg-rose-600 text-white font-bold text-sm">Ооба</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST CONTAINER ==================== -->
+  <div id="toast-box" class="fixed top-20 right-4 z-[70] flex flex-col gap-2 max-w-xs w-full pointer-events-none"></div>
+
+  <!-- ==================== FIREBASE V10.14.1 MODULAR SDK & APP LOGIC ==================== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // EXACT FIREBASE CONFIGURATION & DATABASE PATH
+    const firebaseConfig = {
+      apiKey: "AIzaSyDqud48rT3bvB6HXceMAFWFCeYm7E7e9Wk",
+      authDomain: "repetitor-jrt-coin.firebaseapp.com",
+      projectId: "repetitor-jrt-coin",
+      storageBucket: "repetitor-jrt-coin.firebasestorage.app",
+      messagingSenderId: "469944825001",
+      appId: "1:469944825001:web:ac437a0ef4b43b7c9f65b8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    const stateDocRef = doc(db, 'jrt_coin', 'state');
+    const DEFAULT_TELEGRAM_URL = 'https://t.me/+dGqNndBKQRViYTQ0';
+
+    // Default initial seed data (ONLY written if !snap.exists())
+    const INITIAL_DEFAULT_DATA = {
+      students: [
+        { id: "st_1", name: "Айгерим Бактыбекова", group: "Онлайн-1", contact: "@aigerim_b", coins: 170, history: [] },
+        { id: "st_2", name: "Нурсултан Асанов", group: "Онлайн-1", contact: "@nursultan_a", coins: 131, history: [] },
+        { id: "st_3", name: "Бегимай Талантбекова", group: "Онлайн-2", contact: "@begimai_t", coins: 97, history: [] }
+      ],
+      tasks: [
+        { id: "task_1", title: "Instagram'дан бизди белгилөө", desc: "Курстагы видео сабакты көрүп жатканын жүктөө", description: "Курстагы видео сабакты көрүп жатканын жүктөө", coins: 1, badge: "📸", image: "" },
+        { id: "task_2", title: "Сенин досуң", desc: "Сен аркылуу сенин досуң биздин курска катталуу", description: "Сен аркылуу сенин досуң биздин курска катталуу", coins: 7, badge: "👥", image: "" },
+        { id: "task_3", title: "Эң жогорку балл", desc: "Сынамык тесттен эң жогорку балл алуу", description: "Сынамык тесттен эң жогорку балл алуу", coins: 10, badge: "🎯", image: "" },
+        { id: "task_4", title: "Активдүү окуучу", desc: "Сабак учурундагы эң активдүү окуучу", description: "Сабак учурундагы эң активдүү окуучу", coins: 10, badge: "⚡", image: "" },
+        { id: "task_5", title: "Окуп түшүнүү китеби (сүрөт)", desc: "Китеп менен сүрөткө түшүп, Instagram'га белгилөө", description: "Китеп менен сүрөткө түшүп, Instagram'га белгилөө", coins: 10, badge: "📖", image: "" },
+        { id: "task_6", title: "Кыскача видео влог тартуу", desc: "Курста кантип окуп жатканын көрсөтүү (креатив)", description: "Курста кантип окуп жатканын көрсөтүү (креатив)", coins: 50, badge: "🎥", image: "" },
+        { id: "task_7", title: "Окуп түшүнүү китеби (видео обзор)", desc: "Биздин китеп тууралуу видео тартып, обзор кылуу", description: "Биздин китеп тууралуу видео тартып, обзор кылуу", coins: 50, badge: "🎬", image: "" }
+      ],
+      prizes: [
+        { id: "prize_1", title: "Кышкы оффлайн интенсивине бекер жолдомо", desc: "Тездетилген даярдык курсуна акысыз катышуу.", description: "Тездетилген даярдык курсуна акысыз катышуу.", cost: 200, stock: 3, badge: "🎓", image: "" },
+        { id: "prize_2", title: "Акчалай сыйлык", desc: "Эң көп коин топтогон жеңүүчүлөргө акчалай байге.", description: "Эң көп коин топтогон жеңүүчүлөргө акчалай байге.", cost: 150, stock: 5, badge: "💵", image: "" },
+        { id: "prize_3", title: "ЦООМО сынамык тест", desc: "Расмий ЖРТ форматындагы сынамык тест.", description: "Расмий ЖРТ форматындагы сынамык тест.", cost: 40, stock: 20, badge: "📝", image: "" },
+        { id: "prize_4", title: "Аналогия тест китеби", desc: "Аналогия бөлүмүн өздөштүрүүчү тест китеби.", description: "Аналогия бөлүмүн өздөштүрүүчү тест китеби.", cost: 70, stock: 10, badge: "📘", image: "" },
+        { id: "prize_5", title: "ЦООМО ЖРТ китептери", desc: "ЖРТга даярдык үчүн расмий окуу куралдары.", description: "ЖРТга даярдык үчүн расмий окуу куралдары.", cost: 80, stock: 10, badge: "📚", image: "" },
+        { id: "prize_6", title: "Китеп дүкөнүнө сертификат", desc: "Өзүң каалаган китептерди сатып алууга сертификат.", description: "Өзүң каалаган китептерди сатып алууга сертификат.", cost: 100, stock: 5, badge: "🎫", image: "" }
+      ],
+      redemptions: [],
+      settings: {
+        telegramUrl: DEFAULT_TELEGRAM_URL,
+        adminPassword: "admin123"
+      }
+    };
+
+    const appState = {
+      view: "home",
+      adminTab: "students",
+      isAdmin: sessionStorage.getItem("jrt_coin_admin") === "1",
+      rawDoc: {},
+      students: [],
+      tasks: [],
+      prizes: [],
+      redemptions: [],
+      settings: {
+        telegramUrl: DEFAULT_TELEGRAM_URL,
+        adminPassword: "admin123"
+      },
+      editingStudentId: null,
+      catalogCtx: null,
+      pendingImage: "",
+      redeemPrizeId: null
+    };
+
+    // =========================================================================
+    // HELPERS
+    // =========================================================================
+    function esc(v) {
+      return String(v ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatDate(val) {
+      if (!val) return "—";
+      if (typeof val === "string" && isNaN(Number(val))) return val;
+      const d = new Date(Number(val));
+      if (isNaN(d.getTime())) return String(val);
+      const pad = n => String(n).padStart(2, "0");
+      return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function showToast(msg, type = "success") {
+      const box = document.getElementById("toast-box");
+      const bg = type === "error" ? "bg-rose-600" : type === "info" ? "bg-[#1D4ED8]" : "bg-emerald-600";
+      const el = document.createElement("div");
+      el.className = `pointer-events-auto px-4 py-3 rounded-2xl shadow-lg text-white text-xs sm:text-sm font-bold transition-all ${bg}`;
+      el.textContent = msg;
+      box.appendChild(el);
+      setTimeout(() => {
+        el.style.opacity = "0";
+        setTimeout(() => el.remove(), 250);
+      }, 3000);
+    }
+
+    function getSortedStudents() {
+      return [...appState.students].sort((a, b) =>
+        (Number(b.coins) || 0) - (Number(a.coins) || 0) ||
+        (a.name || "").localeCompare(b.name || "", "ky")
+      );
+    }
+
+    function setConnectionStatus(status) {
+      const el = document.getElementById("sync-indicator");
+      if (!el) return;
+      if (status === "connected") {
+        el.className = "inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full";
+        el.innerHTML = `<span>🟢</span><span class="hidden sm:inline">Firebase туташкан</span><span class="sm:hidden">Туташкан</span>`;
+      } else if (status === "error") {
+        el.className = "inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-rose-700 bg-rose-50 border border-rose-200 px-2.5 py-1 rounded-full";
+        el.innerHTML = `<span>🔴</span><span class="hidden sm:inline">Байланыш катасы</span><span class="sm:hidden">Ката</span>`;
+      } else {
+        el.className = "inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-full";
+        el.innerHTML = `<span>🟡</span><span class="hidden sm:inline">Туташууда...</span><span class="sm:hidden">Күтүү...</span>`;
+      }
+    }
+
+    // =========================================================================
+    // NORMALIZE SNAPSHOT DATA SAFELY (PRESERVING ALL EXISTING FIELDS)
+    // =========================================================================
+    function applySnapshotData(d) {
+      appState.rawDoc = d && typeof d === "object" ? d : {};
+
+      // 1. Students (with per-student history array)
+      const rawStudents = Array.isArray(d.students) ? d.students : [];
+      appState.students = rawStudents.map((s, idx) => ({
+        ...s,
+        id: s.id || `st_${idx}_${Date.now()}`,
+        name: s.name || "Окуучу",
+        group: s.group || "",
+        contact: s.contact || "",
+        coins: Number(s.coins) || 0,
+        history: Array.isArray(s.history) ? s.history : []
+      }));
+
+      // 2. Tasks
+      const rawTasks = Array.isArray(d.tasks) ? d.tasks : [];
+      appState.tasks = rawTasks.map((t, idx) => {
+        const descText = t.desc ?? t.description ?? "";
+        return {
+          ...t,
+          id: t.id || `task_${idx}_${Date.now()}`,
+          title: t.title || t.name || "Тапшырма",
+          desc: descText,
+          description: descText,
+          coins: Number(t.coins) || 0,
+          badge: t.badge || t.emoji || "⚡",
+          image: t.image || ""
+        };
+      });
+
+      // 3. Prizes (fallback to d.rewards if any)
+      const rawPrizes = Array.isArray(d.prizes) ? d.prizes : (Array.isArray(d.rewards) ? d.rewards : []);
+      appState.prizes = rawPrizes.map((p, idx) => {
+        const descText = p.desc ?? p.description ?? "";
+        const costNum = Number(p.cost ?? p.coins) || 0;
+        return {
+          ...p,
+          id: p.id || `prize_${idx}_${Date.now()}`,
+          title: p.title || p.name || "Белек",
+          desc: descText,
+          description: descText,
+          cost: costNum,
+          coins: costNum,
+          stock: p.stock !== undefined && p.stock !== null ? p.stock : "",
+          badge: p.badge || p.emoji || "🎁",
+          image: p.image || ""
+        };
+      });
+
+      // 4. Redemptions
+      appState.redemptions = Array.isArray(d.redemptions) ? d.redemptions : [];
+
+      // 5. Settings
+      appState.settings = {
+        telegramUrl: d.settings?.telegramUrl || DEFAULT_TELEGRAM_URL,
+        adminPassword: d.settings?.adminPassword || "admin123"
+      };
+    }
+
+    // =========================================================================
+    // INITIALIZE FIREBASE (ANONYMOUS AUTH + REALTIME SNAPSHOT)
+    // =========================================================================
+    async function initApp() {
+      try {
+        await signInAnonymously(auth);
+      } catch (authErr) {
+        console.warn("Anonymous auth warning (continuing to Firestore):", authErr);
+      }
+
+      onSnapshot(
+        stateDocRef,
+        async (snap) => {
+          if (snap.exists()) {
+            // NEVER overwrite existing data on load!
+            applySnapshotData(snap.data());
+          } else {
+            // Only initialize default data if document does not exist at all
+            try {
+              await setDoc(stateDocRef, INITIAL_DEFAULT_DATA);
+            } catch (seedErr) {
+              console.error("Initial seed error:", seedErr);
+            }
+            applySnapshotData(INITIAL_DEFAULT_DATA);
+          }
+
+          setConnectionStatus("connected");
+          if (typeof window.__hidePreloader === "function") {
+            window.__hidePreloader();
+          }
+          renderAll();
+        },
+        (err) => {
+          console.error("Firestore onSnapshot error:", err);
+          setConnectionStatus("error");
+          if (typeof window.__hidePreloader === "function") {
+            window.__hidePreloader();
+          }
+          renderAll();
+        }
+      );
+    }
+
+    // Build payload preserving any existing keys + updated collections
+    function buildUpdatedPayload() {
+      return {
+        ...appState.rawDoc,
+        students: appState.students,
+        tasks: appState.tasks,
+        prizes: appState.prizes,
+        redemptions: appState.redemptions,
+        settings: appState.settings,
+        updatedAt: Date.now()
+      };
+    }
+
+    function updateStorageUsageBar() {
+      const label = document.getElementById("storage-size-label");
+      const bar = document.getElementById("storage-size-bar");
+      if (!label || !bar) return;
+
+      const bytes = new TextEncoder().encode(JSON.stringify(buildUpdatedPayload())).length;
+      const kb = Math.round(bytes / 1024);
+      const pct = Math.min(100, Math.round((bytes / 1048576) * 100));
+      label.textContent = `База көлөмү: ${kb} KB / 1024 KB (${pct}%)`;
+      bar.style.width = `${Math.max(2, pct)}%`;
+      bar.className = pct >= 85
+        ? "h-full bg-rose-500 rounded-full transition-all"
+        : pct >= 65
+          ? "h-full bg-amber-400 rounded-full transition-all"
+          : "h-full bg-emerald-400 rounded-full transition-all";
+    }
+
+    async function persistState(successMsg = "Ийгиликтүү сакталды!") {
+      const updatedPayload = buildUpdatedPayload();
+      const bytes = new TextEncoder().encode(JSON.stringify(updatedPayload)).length;
+      if (bytes > 1030000) {
+        throw new Error("База көлөмү 1024 KB (1 MB) чегине жетти! Айрым сүрөттөрдү өчүрүңүз.");
+      }
+      await setDoc(stateDocRef, updatedPayload);
+      updateStorageUsageBar();
+      if (successMsg) showToast(successMsg, "success");
+    }
+
+    // =========================================================================
+    // CLIENT-SIDE CANVAS IMAGE COMPRESSION (MAX 720PX, JPEG 0.72 ~35-55 KB)
+    // =========================================================================
+    function compressImageFile(file) {
+      return new Promise((resolve, reject) => {
+        if (!file || !file.type.startsWith("image/")) {
+          reject(new Error("Сүрөт файлын тандаңыз!"));
+          return;
+        }
+        const reader = new FileReader();
+        reader.onerror = () => reject(new Error("Файлды окууда ката кетти"));
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onerror = () => reject(new Error("Сүрөттү иштетүүдө ката кетти"));
+          img.onload = () => {
+            let w = img.width;
+            let h = img.height;
+            const maxDim = 720;
+            if (w > maxDim || h > maxDim) {
+              if (w >= h) {
+                h = Math.round((h * maxDim) / w);
+                w = maxDim;
+              } else {
+                w = Math.round((w * maxDim) / h);
+                h = maxDim;
+              }
+            }
+            const canvas = document.createElement("canvas");
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext("2d");
+            ctx.fillStyle = "#FFFFFF";
+            ctx.fillRect(0, 0, w, h);
+            ctx.drawImage(img, 0, 0, w, h);
+
+            const dataUrl = canvas.toDataURL("image/jpeg", 0.72);
+            const kb = Math.max(1, Math.round((dataUrl.length * 3) / 4 / 1024));
+            resolve({ dataUrl, kb });
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    window.handleCatalogImageSelect = async function (event) {
+      const file = event.target?.files?.[0];
+      if (!file) return;
+      try {
+        const { dataUrl, kb } = await compressImageFile(file);
+        appState.pendingImage = dataUrl;
+        setCatalogImagePreview(dataUrl, `✓ Сүрөт даяр (${kb} KB)`);
+        showToast(`Сүрөт даярдалды (${kb} KB)`, "success");
+      } catch (err) {
+        showToast(err.message || "Сүрөт жүктөөдө ката кетти", "error");
+      }
+    };
+
+    window.removeCatalogImage = function () {
+      appState.pendingImage = "";
+      const inp = document.getElementById("cat-image-input");
+      if (inp) inp.value = "";
+      setCatalogImagePreview("", "");
+    };
+
+    function setCatalogImagePreview(dataUrl, infoText) {
+      const wrap = document.getElementById("cat-preview-wrap");
+      const img = document.getElementById("cat-preview-img");
+      const info = document.getElementById("cat-preview-info");
+      if (!wrap || !img) return;
+      if (dataUrl) {
+        img.src = dataUrl;
+        if (info) info.textContent = infoText || "✓ Сүрөт кошулган";
+        wrap.classList.remove("hidden");
+      } else {
+        img.src = "";
+        wrap.classList.add("hidden");
+      }
+    }
+
+    // =========================================================================
+    // NAVIGATION & MODALS
+    // =========================================================================
+    window.switchView = function (viewName) {
+      if (viewName === "admin" && !appState.isAdmin) {
+        document.getElementById("login-error").classList.add("hidden");
+        document.getElementById("login-password").value = "";
+        document.getElementById("modal-login").classList.remove("hidden");
+        return;
+      }
+      appState.view = viewName;
+      document.querySelectorAll(".view-section").forEach(el => el.classList.add("hidden"));
+      const target = document.getElementById(`view-${viewName}`);
+      if (target) target.classList.remove("hidden");
+
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        const active = btn.dataset.nav === viewName;
+        btn.className = active
+          ? "nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-white text-[#1D4ED8] shadow-sm transition-all"
+          : "nav-btn px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:text-[#1D4ED8] transition-all";
+      });
+
+      document.querySelectorAll(".mob-nav-btn").forEach(btn => {
+        const active = btn.dataset.mobNav === viewName;
+        btn.className = active
+          ? "mob-nav-btn flex flex-col items-center py-2 rounded-xl text-xs font-extrabold text-[#1D4ED8] bg-[#EFF6FF]"
+          : "mob-nav-btn flex flex-col items-center py-2 rounded-xl text-xs font-semibold text-slate-500";
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      renderAll();
+    };
+
+    window.switchAdminTab = function (tabName) {
+      appState.adminTab = tabName;
+      document.querySelectorAll(".admin-subpanel").forEach(el => el.classList.add("hidden"));
+      const target = document.getElementById(`admin-tab-${tabName}`);
+      if (target) target.classList.remove("hidden");
+
+      document.querySelectorAll(".admin-tab-btn").forEach(btn => {
+        const active = btn.dataset.adminTab === tabName;
+        btn.className = active
+          ? "admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap bg-[#1D4ED8] text-white shadow-sm"
+          : "admin-tab-btn px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap bg-white text-slate-600 border border-slate-200 hover:border-blue-300";
+      });
+    };
+
+    window.closeModal = function (id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.add("hidden");
+    };
+
+    function openConfirm(title, msg, onYes) {
+      document.getElementById("conf-title").textContent = title;
+      document.getElementById("conf-msg").textContent = msg;
+      document.getElementById("conf-yes").onclick = async () => {
+        closeModal("modal-confirm");
+        await onYes();
+      };
+      document.getElementById("modal-confirm").classList.remove("hidden");
+    }
+
+    window.openLightbox = function (kind, id) {
+      const item = kind === "task"
+        ? appState.tasks.find(x => x.id === id)
+        : appState.prizes.find(x => x.id === id);
+      if (!item || !item.image) return;
+      document.getElementById("lb-img").src = item.image;
+      document.getElementById("lb-title").textContent = item.title;
+      document.getElementById("lb-badge").textContent = kind === "task" ? `+${item.coins} коин` : `★ ${item.cost} коин`;
+      document.getElementById("lb-desc").textContent = item.desc || item.description || "";
+      document.getElementById("modal-lightbox").classList.remove("hidden");
+    };
+
+    // =========================================================================
+    // RENDER PUBLIC VIEWS
+    // =========================================================================
+    function renderAll() {
+      updateAdminHeaderUI();
+      renderLeaderboard();
+      renderTasksView();
+      renderPrizesView();
+      if (appState.isAdmin) renderAdminAll();
+    }
+
+    window.clearStudentSearch = function () {
+      document.getElementById("student-search-input").value = "";
+      document.getElementById("clear-student-search").classList.add("hidden");
+      renderLeaderboard();
+    };
+
+    window.renderLeaderboard = function () {
+      document.getElementById("stat-students").textContent = appState.students.length;
+      document.getElementById("stat-tasks").textContent = appState.tasks.length;
+      document.getElementById("stat-prizes").textContent = appState.prizes.length;
+      document.getElementById("stat-coins").textContent = appState.students.reduce((sum, s) => sum + (Number(s.coins) || 0), 0);
+
+      const sorted = getSortedStudents();
+
+      // Top 3 Podium
+      const top3El = document.getElementById("home-top3-grid");
+      if (top3El) {
+        const top3 = sorted.slice(0, 3);
+        const medals = ["🥇 1-орун", "🥈 2-орун", "🥉 3-орун"];
+        const cardStyles = [
+          "from-amber-400 via-yellow-300 to-amber-300 text-slate-950 border-amber-400",
+          "from-slate-100 to-slate-200 text-slate-900 border-slate-300",
+          "from-orange-50 to-amber-100 text-slate-900 border-amber-200"
+        ];
+        top3El.innerHTML = top3.length
+          ? top3.map((s, idx) => `
+              <button onclick="openStudentDetail('${esc(s.id)}')" class="text-left p-5 rounded-3xl bg-gradient-to-br ${cardStyles[idx]} border shadow-sm hover:scale-[1.01] transition-transform">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-white/85">${medals[idx]}</span>
+                  <span class="text-xs font-bold opacity-75">${esc(s.group || "")}</span>
+                </div>
+                <div class="font-display font-extrabold text-lg mt-3 truncate">${esc(s.name)}</div>
+                <div class="font-display font-extrabold text-2xl mt-1.5">★ ${Number(s.coins) || 0} <span class="text-xs font-bold">коин</span></div>
+              </button>
+            `).join("")
+          : `<div class="col-span-full bg-white rounded-2xl p-6 text-center text-sm text-slate-500 border border-slate-200">Азырынча окуучулар кошула элек.</div>`;
+      }
+
+      // Filtered Leaderboard Table
+      const inp = document.getElementById("student-search-input");
+      const clearBtn = document.getElementById("clear-student-search");
+      const q = (inp?.value || "").trim().toLowerCase();
+      if (clearBtn) clearBtn.classList.toggle("hidden", !q);
+
+      const filtered = sorted.filter(s =>
+        !q || (s.name || "").toLowerCase().includes(q) || (s.group || "").toLowerCase().includes(q)
+      );
+
+      document.getElementById("leaderboard-count").textContent = `${filtered.length} окуучу`;
+
+      const tbody = document.getElementById("leaderboard-tbody");
+      if (!tbody) return;
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-500">Окуучу табылган жок.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        const rank = sorted.findIndex(x => x.id === s.id) + 1;
+        const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : `#${rank}`;
+        return `
+          <tr onclick="openStudentDetail('${esc(s.id)}')" class="hover:bg-[#EFF6FF] cursor-pointer transition-colors">
+            <td class="py-3.5 px-4 text-center font-display font-extrabold text-slate-700">${medal}</td>
+            <td class="py-3.5 px-4 font-bold text-slate-900">
+              ${esc(s.name)}
+              <div class="text-xs font-normal text-slate-500 sm:hidden">${esc(s.group || "")}</div>
+            </td>
+            <td class="py-3.5 px-4 hidden sm:table-cell text-xs font-semibold text-slate-600">${esc(s.group || "—")}</td>
+            <td class="py-3.5 px-4 text-right">
+              <span class="px-3 py-1 rounded-full bg-amber-50 border border-amber-200 font-display font-extrabold text-amber-700">★ ${Number(s.coins) || 0}</span>
+            </td>
+            <td class="py-3.5 px-4 text-right">
+              <span class="text-xs font-bold text-[#1D4ED8] hover:underline">Көрүү →</span>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    };
+
+    // Student Detail Modal (Rank, Coins, Full History)
+    window.openStudentDetail = function (studentId) {
+      const sorted = getSortedStudents();
+      const s = sorted.find(x => x.id === studentId);
+      if (!s) return;
+
+      const rank = sorted.findIndex(x => x.id === studentId) + 1;
+      const history = Array.isArray(s.history) ? [...s.history].reverse() : [];
+      const earned = history.filter(h => (Number(h.amount) || 0) > 0).reduce((sum, h) => sum + Number(h.amount), 0);
+      const spent = history.filter(h => (Number(h.amount) || 0) < 0).reduce((sum, h) => sum + Math.abs(Number(h.amount)), 0);
+
+      document.getElementById("sd-rank-group").textContent = `#${rank} орун • ${s.group || "Онлайн ЖРТ"}`;
+      document.getElementById("sd-name").textContent = s.name;
+      document.getElementById("sd-body").innerHTML = `
+        <div class="grid grid-cols-3 gap-2.5 text-center">
+          <div class="p-3 rounded-2xl bg-[#EFF6FF] border border-blue-100">
+            <div class="text-[11px] font-bold text-[#1D4ED8]">Баланс</div>
+            <div class="font-display font-extrabold text-lg sm:text-xl text-slate-900 mt-0.5">★ ${Number(s.coins) || 0}</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200">
+            <div class="text-[11px] font-bold text-emerald-700">Топтогон</div>
+            <div class="font-display font-extrabold text-lg sm:text-xl text-emerald-800 mt-0.5">+${earned}</div>
+          </div>
+          <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200">
+            <div class="text-[11px] font-bold text-amber-700">Жумшаган</div>
+            <div class="font-display font-extrabold text-lg sm:text-xl text-amber-800 mt-0.5">−${spent}</div>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="font-display font-bold text-sm text-slate-900 mb-2">📜 Коин тарыхы (${history.length})</h4>
+          ${history.length === 0
+            ? `<div class="p-4 rounded-2xl bg-slate-50 text-xs text-slate-500 text-center">Азырынча коин тарыхы жазыла элек.</div>`
+            : `<div class="space-y-2 max-h-64 overflow-y-auto pr-1">
+                ${history.map(h => {
+                  const amt = Number(h.amount) || 0;
+                  const pos = amt >= 0;
+                  return `
+                    <div class="p-3 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between gap-2 text-xs sm:text-sm">
+                      <div class="min-w-0">
+                        <div class="font-semibold text-slate-800 truncate">${esc(h.reason || "Операция")}</div>
+                        <div class="text-[11px] text-slate-400">${esc(formatDate(h.date || h.createdAt))}</div>
+                      </div>
+                      <span class="font-display font-extrabold px-2.5 py-1 rounded-xl shrink-0 ${pos ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-800'}">
+                        ${pos ? "+" : ""}${amt}
+                      </span>
+                    </div>
+                  `;
+                }).join("")}
+               </div>`
+          }
+        </div>
+      `;
+
+      document.getElementById("modal-student-detail").classList.remove("hidden");
+    };
+
+    // Tasks View
+    function renderTasksView() {
+      const topLink = document.getElementById("tasks-telegram-top");
+      if (topLink) topLink.href = appState.settings.telegramUrl || DEFAULT_TELEGRAM_URL;
+
+      const grid = document.getElementById("tasks-grid");
+      if (!grid) return;
+      const list = [...appState.tasks].sort((a, b) => (a.coins || 0) - (b.coins || 0));
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-full bg-white p-8 rounded-3xl text-center text-slate-500 border border-slate-200">Тапшырмалар кошула элек.</div>`;
+        return;
+      }
+
+      const tgUrl = esc(appState.settings.telegramUrl || DEFAULT_TELEGRAM_URL);
+
+      grid.innerHTML = list.map(t => `
+        <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-4">
+          <div class="space-y-3">
+            ${t.image
+              ? `<div onclick="openLightbox('task', '${esc(t.id)}')" class="relative w-full h-44 rounded-2xl overflow-hidden bg-slate-100 cursor-zoom-in group">
+                   <img src="${esc(t.image)}" alt="${esc(t.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                   <span class="absolute top-2.5 right-2.5 px-3 py-1 rounded-full bg-[#F59E0B] text-slate-950 font-display font-extrabold text-xs shadow">+${Number(t.coins)} коин</span>
+                   <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/65 text-white text-[10px] font-semibold">🔍 Чоңойтуу</span>
+                 </div>`
+              : `<div class="flex items-start justify-between gap-3">
+                   <div class="w-12 h-12 rounded-2xl bg-[#EFF6FF] flex items-center justify-center text-2xl">${esc(t.badge || "⚡")}</div>
+                   <span class="px-3.5 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300/70 font-display font-extrabold text-xs sm:text-sm">+${Number(t.coins)} коин</span>
+                 </div>`
+            }
+            <div>
+              <h3 class="font-display font-bold text-slate-900 text-base sm:text-lg leading-snug">${esc(t.title)}</h3>
+              <p class="text-sm text-slate-600 mt-1 leading-relaxed">${esc(t.desc || t.description || "")}</p>
+            </div>
+          </div>
+          <a href="${tgUrl}" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 rounded-2xl bg-[#EFF6FF] hover:bg-[#1D4ED8] text-[#1D4ED8] hover:text-white font-bold text-xs sm:text-sm text-center transition-all">
+            ✈️ Telegram аркылуу жөнөтүү
+          </a>
+        </div>
+      `).join("");
+    }
+
+    // Prizes View + Student Self-Service Redemption
+    function renderPrizesView() {
+      const grid = document.getElementById("prizes-grid");
+      if (!grid) return;
+      const list = [...appState.prizes].sort((a, b) => (a.cost || 0) - (b.cost || 0));
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-full bg-white p-8 rounded-3xl text-center text-slate-500 border border-slate-200">Белектер кошула элек.</div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(p => {
+        const hasStock = p.stock !== "" && p.stock !== null && p.stock !== undefined && !isNaN(Number(p.stock));
+        const stockNum = hasStock ? Number(p.stock) : null;
+        const outOfStock = hasStock && stockNum <= 0;
+
+        return `
+          <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex flex-col justify-between gap-4">
+            <div class="space-y-3">
+              ${p.image
+                ? `<div onclick="openLightbox('prize', '${esc(p.id)}')" class="relative w-full h-44 rounded-2xl overflow-hidden bg-slate-100 cursor-zoom-in group">
+                     <img src="${esc(p.image)}" alt="${esc(p.title)}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                     <span class="absolute top-2.5 right-2.5 px-3 py-1 rounded-full bg-[#1D4ED8] text-white font-display font-extrabold text-xs shadow">★ ${Number(p.cost)} коин</span>
+                     <span class="absolute bottom-2 right-2 px-2 py-0.5 rounded-lg bg-slate-900/65 text-white text-[10px] font-semibold">🔍 Чоңойтуу</span>
+                   </div>`
+                : `<div class="flex items-start justify-between gap-3">
+                     <div class="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center text-2xl">${esc(p.badge || "🎁")}</div>
+                     <span class="px-3.5 py-1.5 rounded-full bg-[#1D4ED8] text-white font-display font-extrabold text-xs sm:text-sm">★ ${Number(p.cost)} коин</span>
+                   </div>`
+              }
+              <div>
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="font-display font-bold text-slate-900 text-base sm:text-lg leading-snug">${esc(p.title)}</h3>
+                </div>
+                <p class="text-sm text-slate-600 mt-1 leading-relaxed">${esc(p.desc || p.description || "")}</p>
+                ${hasStock
+                  ? `<div class="mt-2 inline-block px-2.5 py-0.5 rounded-lg text-xs font-bold ${outOfStock ? 'bg-rose-50 text-rose-600' : 'bg-slate-100 text-slate-600'}">
+                       ${outOfStock ? "Түгөндү (0 шт)" : `Калды: ${stockNum} даана`}
+                     </div>`
+                  : ""
+                }
+              </div>
+            </div>
+            <button
+              onclick="openRedeemModal('${esc(p.id)}')"
+              ${outOfStock ? "disabled" : ""}
+              class="w-full py-3 px-4 rounded-2xl font-extrabold text-xs sm:text-sm transition-all ${outOfStock ? 'bg-slate-100 text-slate-400 cursor-not-allowed' : 'bg-[#F59E0B] hover:bg-amber-400 text-slate-950 shadow-sm active:scale-95'}"
+            >
+              ${outOfStock ? "Белек түгөндү" : "🎁 Алмаштыруу"}
+            </button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    window.openRedeemModal = function (prizeId) {
+      const p = appState.prizes.find(x => x.id === prizeId);
+      if (!p) return;
+      appState.redeemPrizeId = prizeId;
+
+      document.getElementById("redeem-prize-summary").innerHTML = `
+        <div class="flex items-center justify-between gap-2">
+          <div class="font-display font-extrabold text-slate-900 text-sm sm:text-base">${esc(p.badge || "🎁")} ${esc(p.title)}</div>
+          <span class="px-3 py-1 rounded-full bg-[#1D4ED8] text-white font-display font-extrabold text-xs shrink-0">★ ${Number(p.cost)} коин</span>
+        </div>
+        <p class="text-xs text-slate-600 mt-1">${esc(p.desc || p.description || "")}</p>
+      `;
+
+      const sel = document.getElementById("redeem-student-select");
+      const sorted = [...appState.students].sort((a, b) => (a.name || "").localeCompare(b.name || "", "ky"));
+      sel.innerHTML = sorted.length
+        ? sorted.map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(s.group || "—")}) — ★ ${Number(s.coins) || 0} коин</option>`).join("")
+        : `<option value="">Окуучулар жок</option>`;
+
+      updateRedeemBalanceHint();
+      document.getElementById("modal-redeem").classList.remove("hidden");
+    };
+
+    window.updateRedeemBalanceHint = function () {
+      const p = appState.prizes.find(x => x.id === appState.redeemPrizeId);
+      const stId = document.getElementById("redeem-student-select")?.value;
+      const s = appState.students.find(x => x.id === stId);
+      const hint = document.getElementById("redeem-balance-hint");
+      const btn = document.getElementById("redeem-submit-btn");
+      if (!p || !s || !hint || !btn) return;
+
+      const bal = Number(s.coins) || 0;
+      const cost = Number(p.cost) || 0;
+      if (bal >= cost) {
+        hint.className = "text-xs font-bold p-3 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200";
+        hint.textContent = `✓ Балансың жетет! Алмаштыргандан кийин ${bal - cost} коин калат.`;
+        btn.disabled = false;
+        btn.className = "flex-1 py-3 rounded-xl bg-[#F59E0B] hover:bg-amber-400 text-slate-950 font-extrabold text-sm";
+      } else {
+        hint.className = "text-xs font-bold p-3 rounded-xl bg-rose-50 text-rose-700 border border-rose-200";
+        hint.textContent = `✕ Коин жетпейт! Сага дагы ${cost - bal} коин керек.`;
+        btn.disabled = true;
+        btn.className = "flex-1 py-3 rounded-xl bg-slate-200 text-slate-400 font-bold text-sm cursor-not-allowed";
+      }
+    };
+
+    window.handleConfirmRedemption = async function (e) {
+      e.preventDefault();
+      const p = appState.prizes.find(x => x.id === appState.redeemPrizeId);
+      const stId = document.getElementById("redeem-student-select")?.value;
+      const s = appState.students.find(x => x.id === stId);
+      if (!p || !s) return;
+
+      const cost = Number(p.cost) || 0;
+      if ((Number(s.coins) || 0) < cost) {
+        showToast("Коин жетпейт!", "error");
+        return;
+      }
+
+      try {
+        // 1. Deduct coins & record history inside student object
+        s.coins = (Number(s.coins) || 0) - cost;
+        if (!Array.isArray(s.history)) s.history = [];
+        s.history.push({
+          id: "h_" + Date.now(),
+          date: formatDate(Date.now()),
+          createdAt: Date.now(),
+          reason: `Белек алмаштырылды: ${p.title}`,
+          amount: -cost
+        });
+
+        // 2. Decrement stock if numeric
+        if (p.stock !== "" && p.stock !== null && p.stock !== undefined && !isNaN(Number(p.stock))) {
+          p.stock = Math.max(0, Number(p.stock) - 1);
+        }
+
+        // 3. Create redemption record
+        appState.redemptions.unshift({
+          id: "red_" + Date.now(),
+          studentId: s.id,
+          studentName: s.name,
+          studentGroup: s.group || "",
+          prizeId: p.id,
+          prizeTitle: p.title,
+          cost,
+          status: "Күтүүдө",
+          date: formatDate(Date.now()),
+          createdAt: Date.now()
+        });
+
+        closeModal("modal-redeem");
+        renderAll();
+        await persistState(`«${p.title}» белегине алмаштырылды!`);
+      } catch (err) {
+        showToast(err.message || "Ката кетти", "error");
+      }
+    };
+
+    // =========================================================================
+    // ADMIN AUTH (PASSWORD-PROTECTED VIA SETTINGS.ADMINPASSWORD)
+    // =========================================================================
+    window.handleAdminButtonClick = function () {
+      if (appState.isAdmin) {
+        switchView("admin");
+      } else {
+        document.getElementById("login-error").classList.add("hidden");
+        document.getElementById("login-password").value = "";
+        document.getElementById("modal-login").classList.remove("hidden");
+      }
+    };
+
+    window.handleAdminLogin = function (e) {
+      e.preventDefault();
+      const entered = document.getElementById("login-password").value;
+      const expected = appState.settings.adminPassword || "admin123";
+      if (entered === expected) {
+        appState.isAdmin = true;
+        sessionStorage.setItem("jrt_coin_admin", "1");
+        closeModal("modal-login");
+        switchView("admin");
+        switchAdminTab(appState.adminTab);
+        showToast("Админ панелге кош келиңиз!", "success");
+      } else {
+        document.getElementById("login-error").classList.remove("hidden");
+      }
+    };
+
+    window.logoutAdmin = function () {
+      appState.isAdmin = false;
+      sessionStorage.removeItem("jrt_coin_admin");
+      switchView("home");
+      showToast("Админ режимден чыктыңыз", "info");
+    };
+
+    function updateAdminHeaderUI() {
+      const btn = document.getElementById("header-admin-btn");
+      const lbl = document.getElementById("header-admin-label");
+      if (!btn || !lbl) return;
+      if (appState.isAdmin) {
+        btn.className = "px-3 py-2 rounded-xl text-xs sm:text-sm font-extrabold bg-slate-900 text-yellow-300";
+        lbl.textContent = "Админ панель";
+      } else {
+        btn.className = "px-2.5 sm:px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-200 text-slate-700 hover:text-[#1D4ED8] hover:bg-[#EFF6FF]";
+        lbl.textContent = "🔒 Админ панель";
+      }
+    }
+
+    // =========================================================================
+    // RENDER & MANAGE ADMIN PANEL
+    // =========================================================================
+    function renderAdminAll() {
+      updateStorageUsageBar();
+      populateCoinFormDropdowns();
+      renderAdminStudents();
+      renderAdminTasks();
+      renderAdminPrizes();
+      renderAdminRedemptions();
+      renderAdminSettings();
+    }
+
+    // ---------- SUB-TAB 1: STUDENTS & COINS ----------
+    function populateCoinFormDropdowns() {
+      const stSel = document.getElementById("coin-student-select");
+      const grpSel = document.getElementById("coin-group-select");
+      const taskSel = document.getElementById("coin-task-preset");
+      if (!stSel || !grpSel || !taskSel) return;
+
+      const sorted = [...appState.students].sort((a, b) => (a.name || "").localeCompare(b.name || "", "ky"));
+      const prevSt = stSel.value;
+      stSel.innerHTML = sorted.map(s => `<option value="${esc(s.id)}">${esc(s.name)} (${esc(s.group || "—")}) — ★ ${Number(s.coins) || 0}</option>`).join("");
+      if (prevSt && sorted.some(s => s.id === prevSt)) stSel.value = prevSt;
+
+      const groups = [...new Set(appState.students.map(s => (s.group || "").trim()).filter(Boolean))].sort();
+      const prevGrp = grpSel.value;
+      grpSel.innerHTML = groups.length
+        ? groups.map(g => `<option value="${esc(g)}">${esc(g)} (${appState.students.filter(s => (s.group || "").trim() === g).length} окуучу)</option>`).join("")
+        : `<option value="">Топтор жок</option>`;
+      if (prevGrp && groups.includes(prevGrp)) grpSel.value = prevGrp;
+
+      const prevTask = taskSel.value;
+      taskSel.innerHTML = `<option value="">— Себебин өзүм жазам —</option>` +
+        appState.tasks.map(t => `<option value="${esc(t.id)}">+${t.coins} коин — ${esc(t.title)}</option>`).join("");
+      if (prevTask) taskSel.value = prevTask;
+    }
+
+    window.toggleCoinTargetSelect = function () {
+      const mode = document.getElementById("coin-target-mode").value;
+      document.getElementById("coin-student-wrap").classList.toggle("hidden", mode !== "student");
+      document.getElementById("coin-group-wrap").classList.toggle("hidden", mode !== "group");
+    };
+
+    window.applyTaskPreset = function (taskId) {
+      if (!taskId) return;
+      const t = appState.tasks.find(x => x.id === taskId);
+      if (!t) return;
+      document.getElementById("coin-op-type").value = "add";
+      document.getElementById("coin-op-amount").value = Number(t.coins) || 1;
+      document.getElementById("coin-op-reason").value = t.title;
+    };
+
+    window.handleCoinOperation = async function (e) {
+      e.preventDefault();
+      const mode = document.getElementById("coin-target-mode").value;
+      const opType = document.getElementById("coin-op-type").value;
+      const rawAmt = Math.max(1, parseInt(document.getElementById("coin-op-amount").value, 10) || 0);
+      const reason = document.getElementById("coin-op-reason").value.trim();
+      if (!reason || rawAmt <= 0) return;
+
+      const delta = opType === "add" ? rawAmt : -rawAmt;
+      const now = Date.now();
+      const dateStr = formatDate(now);
+
+      try {
+        if (mode === "student") {
+          const stId = document.getElementById("coin-student-select").value;
+          const s = appState.students.find(x => x.id === stId);
+          if (!s) return;
+          s.coins = Math.max(0, (Number(s.coins) || 0) + delta);
+          if (!Array.isArray(s.history)) s.history = [];
+          s.history.push({
+            id: "h_" + now,
+            date: dateStr,
+            createdAt: now,
+            reason,
+            amount: delta
+          });
+          renderAll();
+          await persistState(`${s.name}: ${delta > 0 ? "+" : ""}${delta} коин сакталды!`);
+        } else {
+          const grp = document.getElementById("coin-group-select").value;
+          const targets = appState.students.filter(s => (s.group || "").trim() === grp);
+          if (targets.length === 0) {
+            showToast("Бул топто окуучу жок!", "error");
+            return;
+          }
+          targets.forEach((s, idx) => {
+            s.coins = Math.max(0, (Number(s.coins) || 0) + delta);
+            if (!Array.isArray(s.history)) s.history = [];
+            s.history.push({
+              id: `h_${now}_${idx}`,
+              date: dateStr,
+              createdAt: now,
+              reason: `${reason} (${grp})`,
+              amount: delta
+            });
+          });
+          renderAll();
+          await persistState(`«${grp}» тобуна (${targets.length} окуучу): ${delta > 0 ? "+" : ""}${delta} коин сакталды!`);
+        }
+        document.getElementById("coin-op-reason").value = "";
+        document.getElementById("coin-task-preset").value = "";
+      } catch (err) {
+        showToast(err.message || "Сактоодо ката кетти", "error");
+      }
+    };
+
+    window.renderAdminStudents = function () {
+      const tbody = document.getElementById("admin-students-tbody");
+      if (!tbody) return;
+      const q = (document.getElementById("admin-st-search")?.value || "").trim().toLowerCase();
+      const list = getSortedStudents().filter(s =>
+        !q || (s.name || "").toLowerCase().includes(q) || (s.group || "").toLowerCase().includes(q)
+      );
+
+      if (list.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-slate-500">Окуучулар табылган жок.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => `
+        <tr class="hover:bg-slate-50">
+          <td class="py-3 px-4 font-bold text-slate-900">
+            <button onclick="openStudentDetail('${esc(s.id)}')" class="text-left hover:text-[#1D4ED8] hover:underline">${esc(s.name)}</button>
+          </td>
+          <td class="py-3 px-4 text-xs text-slate-600">
+            <div class="font-semibold">${esc(s.group || "—")}</div>
+            <div class="text-slate-400">${esc(s.contact || "")}</div>
+          </td>
+          <td class="py-3 px-4 text-right font-display font-extrabold text-amber-600">★ ${Number(s.coins) || 0}</td>
+          <td class="py-3 px-4 text-right whitespace-nowrap space-x-1">
+            <button onclick="openStudentModal('${esc(s.id)}')" class="px-2.5 py-1.5 rounded-lg bg-[#EFF6FF] hover:bg-blue-100 text-[#1D4ED8] text-xs font-bold">✏️ Өзгөртүү</button>
+            <button onclick="confirmDeleteStudent('${esc(s.id)}')" class="px-2.5 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold">🗑</button>
+          </td>
+        </tr>
+      `).join("");
+    };
+
+    window.openStudentModal = function (id = null) {
+      appState.editingStudentId = id;
+      const s = id ? appState.students.find(x => x.id === id) : null;
+      document.getElementById("st-modal-title").textContent = s ? "✏️ Окуучуну өзгөртүү" : "+ Жаңы окуучу";
+      document.getElementById("st-form-name").value = s?.name || "";
+      document.getElementById("st-form-group").value = s?.group || "";
+      document.getElementById("st-form-coins").value = s ? (Number(s.coins) || 0) : 0;
+      document.getElementById("st-form-contact").value = s?.contact || "";
+      document.getElementById("modal-student-form").classList.remove("hidden");
+    };
+
+    window.handleStudentFormSubmit = async function (e) {
+      e.preventDefault();
+      const name = document.getElementById("st-form-name").value.trim();
+      const group = document.getElementById("st-form-group").value.trim();
+      const coins = Math.max(0, parseInt(document.getElementById("st-form-coins").value, 10) || 0);
+      const contact = document.getElementById("st-form-contact").value.trim();
+      if (!name) return;
+
+      try {
+        if (appState.editingStudentId) {
+          const s = appState.students.find(x => x.id === appState.editingStudentId);
+          if (s) {
+            s.name = name;
+            s.group = group;
+            s.coins = coins;
+            s.contact = contact;
+          }
+        } else {
+          appState.students.push({
+            id: "st_" + Date.now() + "_" + Math.random().toString(36).slice(2, 5),
+            name,
+            group,
+            contact,
+            coins,
+            history: []
+          });
+        }
+        closeModal("modal-student-form");
+        renderAll();
+        await persistState("Ийгиликтүү сакталды!");
+      } catch (err) {
+        showToast(err.message || "Сактоодо ката кетти", "error");
+      }
+    };
+
+    window.confirmDeleteStudent = function (id) {
+      const s = appState.students.find(x => x.id === id);
+      if (!s) return;
+      openConfirm("Окуучуну өчүрүү", `«${s.name}» окуучусун өчүрөсүзбү?`, async () => {
+        appState.students = appState.students.filter(x => x.id !== id);
+        renderAll();
+        await persistState("Окуучу өчүрүлдү!");
+      });
+    };
+
+    // ---------- SUB-TAB 2 & 3: TASKS & PRIZES (ADD + EDIT + IMAGE UPLOAD) ----------
+    function renderAdminTasks() {
+      const grid = document.getElementById("admin-tasks-grid");
+      if (!grid) return;
+      const list = [...appState.tasks].sort((a, b) => (a.coins || 0) - (b.coins || 0));
+      grid.innerHTML = list.map(t => `
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between">
+          <div>
+            ${t.image
+              ? `<img src="${esc(t.image)}" alt="${esc(t.title)}" class="w-full h-36 object-cover bg-slate-100" />`
+              : `<div class="p-4 pb-0 flex items-center justify-between">
+                   <span class="w-11 h-11 rounded-2xl bg-[#EFF6FF] flex items-center justify-center text-2xl">${esc(t.badge || "⚡")}</span>
+                   <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 font-display font-extrabold text-xs">+${Number(t.coins)} коин</span>
+                 </div>`
+            }
+            <div class="p-4">
+              <div class="flex items-center justify-between gap-2">
+                <h4 class="font-display font-bold text-slate-900 text-sm sm:text-base">${esc(t.title)}</h4>
+                ${t.image ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-extrabold text-xs shrink-0">+${Number(t.coins)}</span>` : ""}
+              </div>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">${esc(t.desc || t.description || "")}</p>
+            </div>
+          </div>
+          <div class="px-4 pb-4 flex gap-2">
+            <button onclick="openTaskModal('${esc(t.id)}')" class="flex-1 py-2.5 rounded-xl bg-[#EFF6FF] hover:bg-blue-100 text-[#1D4ED8] font-bold text-xs">✏️ Өзгөртүү</button>
+            <button onclick="confirmDeleteCatalog('task', '${esc(t.id)}')" class="px-3 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs">🗑 Өчүрүү</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderAdminPrizes() {
+      const grid = document.getElementById("admin-prizes-grid");
+      if (!grid) return;
+      const list = [...appState.prizes].sort((a, b) => (a.cost || 0) - (b.cost || 0));
+      grid.innerHTML = list.map(p => `
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between">
+          <div>
+            ${p.image
+              ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" class="w-full h-36 object-cover bg-slate-100" />`
+              : `<div class="p-4 pb-0 flex items-center justify-between">
+                   <span class="w-11 h-11 rounded-2xl bg-amber-50 flex items-center justify-center text-2xl">${esc(p.badge || "🎁")}</span>
+                   <span class="px-3 py-1 rounded-full bg-[#1D4ED8] text-white font-display font-extrabold text-xs">★ ${Number(p.cost)} коин</span>
+                 </div>`
+            }
+            <div class="p-4">
+              <div class="flex items-center justify-between gap-2">
+                <h4 class="font-display font-bold text-slate-900 text-sm sm:text-base">${esc(p.title)}</h4>
+                ${p.image ? `<span class="px-2.5 py-0.5 rounded-full bg-[#1D4ED8] text-white font-extrabold text-xs shrink-0">★ ${Number(p.cost)}</span>` : ""}
+              </div>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">${esc(p.desc || p.description || "")}</p>
+              ${p.stock !== "" && p.stock !== null && p.stock !== undefined ? `<div class="text-[11px] font-bold text-slate-400 mt-1">Калган саны: ${esc(p.stock)}</div>` : ""}
+            </div>
+          </div>
+          <div class="px-4 pb-4 flex gap-2">
+            <button onclick="openPrizeModal('${esc(p.id)}')" class="flex-1 py-2.5 rounded-xl bg-[#EFF6FF] hover:bg-blue-100 text-[#1D4ED8] font-bold text-xs">✏️ Өзгөртүү</button>
+            <button onclick="confirmDeleteCatalog('prize', '${esc(p.id)}')" class="px-3 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold text-xs">🗑 Өчүрүү</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    window.openTaskModal = function (id = null) {
+      const item = id ? appState.tasks.find(x => x.id === id) : null;
+      appState.catalogCtx = { kind: "task", id };
+      appState.pendingImage = item?.image || "";
+
+      document.getElementById("cat-modal-title").textContent = item ? "✏️ Тапшырманы өзгөртүү" : "+ Жаңы тапшырма";
+      document.getElementById("cat-title-label").textContent = "Тапшырманын аталышы *";
+      document.getElementById("cat-coins-label").textContent = "Коин саны (+) *";
+      document.getElementById("cat-title").value = item?.title || "";
+      document.getElementById("cat-desc").value = item?.desc || item?.description || "";
+      document.getElementById("cat-coins").value = item?.coins ?? 10;
+      document.getElementById("cat-badge").value = item?.badge || "⚡";
+      document.getElementById("cat-stock-wrap").classList.add("hidden");
+
+      const pills = ["📸", "👥", "🎯", "⚡", "📖", "🎥", "🎬", "🏆"];
+      document.getElementById("cat-badge-pills").innerHTML = pills.map(em =>
+        `<button type="button" onclick="document.getElementById('cat-badge').value='${em}'" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-blue-100 text-base">${em}</button>`
+      ).join("");
+
+      const inp = document.getElementById("cat-image-input");
+      if (inp) inp.value = "";
+      setCatalogImagePreview(appState.pendingImage, "✓ Учурдагы сүрөт");
+      document.getElementById("modal-catalog").classList.remove("hidden");
+    };
+
+    window.openPrizeModal = function (id = null) {
+      const item = id ? appState.prizes.find(x => x.id === id) : null;
+      appState.catalogCtx = { kind: "prize", id };
+      appState.pendingImage = item?.image || "";
+
+      document.getElementById("cat-modal-title").textContent = item ? "✏️ Белекти өзгөртүү" : "+ Жаңы белек";
+      document.getElementById("cat-title-label").textContent = "Белектин аталышы *";
+      document.getElementById("cat-coins-label").textContent = "Баасы / Коин саны *";
+      document.getElementById("cat-title").value = item?.title || "";
+      document.getElementById("cat-desc").value = item?.desc || item?.description || "";
+      document.getElementById("cat-coins").value = item?.cost ?? 50;
+      document.getElementById("cat-badge").value = item?.badge || "🎁";
+      document.getElementById("cat-stock-wrap").classList.remove("hidden");
+      document.getElementById("cat-stock").value = (item && item.stock !== "" && item.stock !== null && item.stock !== undefined) ? item.stock : "";
+
+      const pills = ["🎁", "🎓", "💵", "📝", "📘", "📚", "🎫", "🔋"];
+      document.getElementById("cat-badge-pills").innerHTML = pills.map(em =>
+        `<button type="button" onclick="document.getElementById('cat-badge').value='${em}'" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-amber-100 text-base">${em}</button>`
+      ).join("");
+
+      const inp = document.getElementById("cat-image-input");
+      if (inp) inp.value = "";
+      setCatalogImagePreview(appState.pendingImage, "✓ Учурдагы сүрөт");
+      document.getElementById("modal-catalog").classList.remove("hidden");
+    };
+
+    window.handleCatalogSubmit = async function (e) {
+      e.preventDefault();
+      const ctx = appState.catalogCtx;
+      if (!ctx) return;
+
+      const title = document.getElementById("cat-title").value.trim();
+      const descText = document.getElementById("cat-desc").value.trim();
+      const numVal = Math.max(1, parseInt(document.getElementById("cat-coins").value, 10) || 1);
+      const badge = document.getElementById("cat-badge").value.trim() || (ctx.kind === "task" ? "⚡" : "🎁");
+      const image = appState.pendingImage || "";
+
+      if (!title) return;
+
+      try {
+        if (ctx.kind === "task") {
+          if (ctx.id) {
+            const idx = appState.tasks.findIndex(x => x.id === ctx.id);
+            if (idx !== -1) {
+              appState.tasks[idx] = {
+                ...appState.tasks[idx],
+                title,
+                desc: descText,
+                description: descText,
+                coins: numVal,
+                badge,
+                image
+              };
+            }
+          } else {
+            appState.tasks.push({
+              id: "task_" + Date.now(),
+              title,
+              desc: descText,
+              description: descText,
+              coins: numVal,
+              badge,
+              image
+            });
+          }
+        } else {
+          const rawStock = document.getElementById("cat-stock").value.trim();
+          const stockVal = rawStock === "" ? "" : Math.max(0, parseInt(rawStock, 10) || 0);
+          if (ctx.id) {
+            const idx = appState.prizes.findIndex(x => x.id === ctx.id);
+            if (idx !== -1) {
+              appState.prizes[idx] = {
+                ...appState.prizes[idx],
+                title,
+                desc: descText,
+                description: descText,
+                cost: numVal,
+                coins: numVal,
+                stock: stockVal,
+                badge,
+                image
+              };
+            }
+          } else {
+            appState.prizes.push({
+              id: "prize_" + Date.now(),
+              title,
+              desc: descText,
+              description: descText,
+              cost: numVal,
+              coins: numVal,
+              stock: stockVal,
+              badge,
+              image
+            });
+          }
+        }
+
+        closeModal("modal-catalog");
+        renderAll();
+        await persistState("Ийгиликтүү сакталды!");
+      } catch (err) {
+        showToast(err.message || "Сактоодо ката кетти", "error");
+      }
+    };
+
+    window.confirmDeleteCatalog = function (kind, id) {
+      const item = kind === "task"
+        ? appState.tasks.find(x => x.id === id)
+        : appState.prizes.find(x => x.id === id);
+      if (!item) return;
+
+      openConfirm(
+        kind === "task" ? "Тапшырманы өчүрүү" : "Белекти өчүрүү",
+        `«${item.title}» өчүрүлсүнбү?`,
+        async () => {
+          if (kind === "task") appState.tasks = appState.tasks.filter(x => x.id !== id);
+          else appState.prizes = appState.prizes.filter(x => x.id !== id);
+          renderAll();
+          await persistState("Ийгиликтүү өчүрүлдү!");
+        }
+      );
+    };
+
+    // ---------- SUB-TAB 4: REDEMPTIONS ----------
+    function renderAdminRedemptions() {
+      const tbody = document.getElementById("admin-redemptions-tbody");
+      const countEl = document.getElementById("redemptions-count");
+      if (!tbody) return;
+      if (countEl) countEl.textContent = appState.redemptions.length;
+
+      if (appState.redemptions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-500">Азырынча алмаштыруулар жок.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = appState.redemptions.map(r => {
+        const isDelivered = r.status === "Берилди" || r.status === "delivered";
+        return `
+          <tr class="hover:bg-slate-50">
+            <td class="py-3 px-4 text-xs text-slate-500 whitespace-nowrap">${esc(formatDate(r.date || r.createdAt))}</td>
+            <td class="py-3 px-4 font-bold text-slate-900">
+              ${esc(r.studentName || "—")}
+              <div class="text-[11px] font-normal text-slate-400">${esc(r.studentGroup || "")}</div>
+            </td>
+            <td class="py-3 px-4 text-xs sm:text-sm font-semibold text-slate-700">${esc(r.prizeTitle || "—")}</td>
+            <td class="py-3 px-4 text-right font-display font-extrabold text-amber-600">★ ${Number(r.cost) || 0}</td>
+            <td class="py-3 px-4 text-right whitespace-nowrap">
+              <button
+                onclick="toggleRedemptionStatus('${esc(r.id)}')"
+                class="px-3 py-1.5 rounded-xl text-xs font-extrabold transition-all ${isDelivered ? 'bg-emerald-100 text-emerald-800 border border-emerald-200' : 'bg-amber-100 text-amber-800 border border-amber-300'}"
+              >
+                ${isDelivered ? "✅ Берилди" : "⏳ Күтүүдө"}
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    window.toggleRedemptionStatus = async function (redId) {
+      const r = appState.redemptions.find(x => x.id === redId);
+      if (!r) return;
+      const isDelivered = r.status === "Берилди" || r.status === "delivered";
+      r.status = isDelivered ? "Күтүүдө" : "Берилди";
+      renderAll();
+      await persistState(`Статус жаңыртылды: ${r.status}`);
+    };
+
+    // ---------- SUB-TAB 5: SETTINGS ----------
+    function renderAdminSettings() {
+      const tgInp = document.getElementById("set-telegram-url");
+      const passInp = document.getElementById("set-admin-pass");
+      if (tgInp && document.activeElement !== tgInp) {
+        tgInp.value = appState.settings.telegramUrl || DEFAULT_TELEGRAM_URL;
+      }
+      if (passInp && document.activeElement !== passInp) {
+        passInp.value = appState.settings.adminPassword || "admin123";
+      }
+    }
+
+    window.handleSaveSettings = async function (e) {
+      e.preventDefault();
+      const telegramUrl = document.getElementById("set-telegram-url").value.trim() || DEFAULT_TELEGRAM_URL;
+      const adminPassword = document.getElementById("set-admin-pass").value.trim() || "admin123";
+      appState.settings = { telegramUrl, adminPassword };
+      try {
+        renderAll();
+        await persistState("Жөндөөлөр ийгиликтүү сакталды!");
+      } catch (err) {
+        showToast(err.message || "Сактоодо ката кетти", "error");
+      }
+    };
+
+    // ---------- CSV EXPORT ----------
+    window.exportStudentsCSV = function () {
+      const sorted = getSortedStudents();
+      const rows = [
+        ["Орун", "Аты-жөнү", "Топ", "Байланыш", "Коин балансы"],
+        ...sorted.map((s, i) => [i + 1, s.name || "", s.group || "", s.contact || "", Number(s.coins) || 0])
+      ];
+      const csv = "\uFEFF" + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "repetitor_jrt_coin.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("CSV файл жүктөлдү!", "success");
+    };
+
+    // Start Application
+    switchView("home");
+    initApp();
+  </script>
+</body>
+</html>
